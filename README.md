@@ -1,2 +1,5 @@
-# pesuio-game-dev
+# PESU-I/O Game Dev
 Repository of resources and student projects for PESUIO Slot 16
+
+# Summary Drive link  
+https://drive.google.com/drive/folders/1Hf8jQU_ElxEhhQcwccMQk_d6GQS4LxrL?usp=drive_link
