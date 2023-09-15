@@ -9,3 +9,6 @@ Questions:
 https://docs.google.com/document/d/1qOhDudvqZjhEtyA6p7xVhwVdQt_O7tUnOYtj7l20dxk/edit?usp=sharing  
 Submission Form:  
 https://forms.gle/KDcReBdBLHmkMbaJ8  
+
+# Assignment-2  
+https://forms.gle/h6wZBnLE48i161Bj9
