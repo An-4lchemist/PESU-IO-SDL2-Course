@@ -11,5 +11,5 @@ And submit your solutions here:
 https://forms.gle/KDcReBdBLHmkMbaJ8  
 
 # Assignment-2  
-Create your own tile-map and upload a picture here  
+Create your own tile-map (min 7x7) and upload a picture here  
 https://forms.gle/h6wZBnLE48i161Bj9
