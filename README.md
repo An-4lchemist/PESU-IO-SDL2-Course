@@ -13,3 +13,7 @@ https://forms.gle/KDcReBdBLHmkMbaJ8
 # Assignment-2  
 Create your own tile-map (min 7x7) and upload a picture here  
 https://forms.gle/h6wZBnLE48i161Bj9
+
+# Assignment-3
+Solve the following questions according to the graph givem    
+https://forms.gle/k5LZgQ9Lx9uPcJej6  
