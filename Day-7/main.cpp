@@ -1,14 +1,14 @@
 #include <iostream>
 #include "Window_Object.h"
 #include "Player_Object.h"
-#include "Map_Object.h"
 
 int main(int argc, char **argv) {
     // initializing stuff
     SDL_Init(SDL_INIT_VIDEO);
+    IMG_Init(IMG_INIT_PNG);
 
-    Window_Object *win_obj = new Window_Object("Pacman", 975, 775);
-    Player_Object *player = new Player_Object(26, 26, 24, 24, win_obj->Renderer);
+    Window_Object *win_obj = new Window_Object((char *) "Pacman", 975, 775);
+    Player_Object *player = new Player_Object(25, 25, 20, 20, win_obj->Renderer);
 
     Map_Object *map = new Map_Object(25, 25, win_obj->Renderer);
 
@@ -37,6 +37,7 @@ int main(int argc, char **argv) {
     delete player;
     delete map;
     SDL_Quit();
+    IMG_Quit();
 
     return 0;
 }

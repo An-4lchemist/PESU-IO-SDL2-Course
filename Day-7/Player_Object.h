@@ -4,23 +4,26 @@
 #include <SDL2/SDL.h>
 #include "Map_Object.h"
 
+#define IDLE 0b000
+#define LEFT 0b001
+#define RIGHT 0b010
+#define JUMP 0b100
+
 class Player_Object {
 public:
 
     SDL_Rect rect;
     SDL_Renderer *Renderer;
 
-    int old_x;
-    int old_y;
-    int speed = 10;
-
-    int jump_acc = 15;
-    int grav_acc = 2;
+    int old_x{};
+    int old_y{};
+    int speed = 3;
     int y_vel{};
+    int jump_acc = 17;
+    int grav_acc = 2;
+    bool is_jumping = false;
 
-    bool move_left{};
-    bool jump{};
-    bool move_right{};
+    int direction_to_move{};
 
     Player_Object(int x, int y, int w, int h, SDL_Renderer *Renderer);
 

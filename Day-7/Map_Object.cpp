@@ -1,4 +1,5 @@
 #include "Map_Object.h"
+#include <iostream>
 
 Map_Object::Map_Object(int cell_w, int cell_h, SDL_Renderer *Renderer)
         : Renderer(Renderer), cell_height(cell_h), cell_width(cell_w) {
@@ -38,15 +39,18 @@ void Map_Object::draw() {
 void Map_Object::handle_collision(SDL_Rect &rect, int old_x, int old_y) {
     /*for (auto wall: walls) {
         if (SDL_HasIntersection(&wall, &rect)) {
-            if (rect.x > old_x) {
-                rect.x = wall.x - rect.w;
-            } else if (rect.x < old_x) {
-                rect.x = wall.x + wall.w;
-            }
             if (rect.y > old_y) {
                 rect.y = wall.y - rect.h;
+                std::cout << "3" << std::endl;
             } else if (rect.y < old_y) {
                 rect.y = wall.y + wall.h;
+                std::cout << "4" << std::endl;
+            } else if (rect.x > old_x) {
+                rect.x = wall.x - rect.w;
+                std::cout << "1" << std::endl;
+            } else if (rect.x < old_x) {
+                rect.x = wall.x + wall.w;
+                std::cout << "2" << std::endl;
             }
             break;
         }
@@ -58,16 +62,44 @@ void Map_Object::handle_collision(SDL_Rect &rect, int old_x, int old_y) {
         rect.x = old_x;
         rect.y = old_y;
 
+        /*bool update_x = true;
+
         while (!is_colliding(rect)) {
+            update_x = !update_x;
+
+            old_x = rect.x;
             old_y = rect.y;
 
+            if (update_x) {
+                if (x_dist > 0) {
+                    rect.x += 1;
+                    x_dist--;
+                } else if (x_dist < 0) {
+                    rect.x -= 1;
+                    x_dist++;
+                }
+            } else {
+                if (y_dist > 0) {
+                    rect.y += 1;
+                    y_dist--;
+                } else if (y_dist < 0) {
+                    rect.y -= 1;
+                    y_dist++;
+                }
+            }
+        }
+        rect.x = old_x;
+        rect.y = old_y;*/
+
+        while (!is_colliding(rect)) {
+            old_y = rect.y;
             if (y_dist > 0) {
                 rect.y += 1;
-                y_dist -= 1;
+                y_dist--;
             } else if (y_dist < 0) {
                 rect.y -= 1;
-                y_dist += 1;
-            } else if (y_dist == 0) {
+                y_dist++;
+            } else {
                 break;
             }
         }
@@ -75,14 +107,13 @@ void Map_Object::handle_collision(SDL_Rect &rect, int old_x, int old_y) {
 
         while (!is_colliding(rect)) {
             old_x = rect.x;
-
             if (x_dist > 0) {
                 rect.x += 1;
-                x_dist -= 1;
+                x_dist--;
             } else if (x_dist < 0) {
                 rect.x -= 1;
-                x_dist += 1;
-            } else if (x_dist == 0) {
+                x_dist++;
+            } else {
                 break;
             }
         }
@@ -91,9 +122,9 @@ void Map_Object::handle_collision(SDL_Rect &rect, int old_x, int old_y) {
 }
 
 bool Map_Object::is_wall(int x_index, int y_index) {
-    if (!(0 <= x_index && x_index <= cols))
+    if (!(0 <= x_index && x_index < cols))
         return false;
-    if (!(0 <= y_index && y_index <= rows))
+    if (!(0 <= y_index && y_index < rows))
         return false;
     return (tile_map[y_index][x_index] == 1);
 }
@@ -104,9 +135,38 @@ bool Map_Object::is_colliding(SDL_Rect &rect) {
     int y1 = (rect.y + 1) / cell_height;
     int y2 = (rect.y + rect.h - 1) / cell_height;
 
-    return is_wall(x1, y1) ||
-           is_wall(x2, y1) ||
-           is_wall(x1, y2) ||
-           is_wall(x2, y2);
+    if (is_wall(x1, y1) ||
+        is_wall(x1, y2) ||
+        is_wall(x2, y1) ||
+        is_wall(x2, y2)) {
+        return true;
+    }
 
+    return false;
+}
+
+bool Map_Object::is_on_floor(SDL_Rect &rect) {
+    int x1 = (rect.x + 1) / cell_width;
+    int x2 = (rect.x + rect.w - 1) / cell_width;
+    int y1 = rect.y / cell_height;
+
+    if (is_wall(x1, y1 + 1) || is_wall(x2, y1 + 1)) {
+        if (rect.y + rect.h == (y1 + 1) * cell_height) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Map_Object::is_below_ceil(SDL_Rect &rect) {
+    int x1 = (rect.x + 1) / cell_width;
+    int x2 = (rect.x + rect.w - 1) / cell_width;
+    int y2 = (rect.y + rect.h - 1) / cell_height;
+
+    if (is_wall(x1, y2 - 1) || is_wall(x2, y2 - 1)) {
+        if (rect.y == y2 * cell_height) {
+            return true;
+        }
+    }
+    return false;
 }

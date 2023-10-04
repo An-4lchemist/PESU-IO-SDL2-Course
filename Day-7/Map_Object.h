@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <vector>
 
+
 class Map_Object {
 public:
     // hello :)))))
@@ -55,9 +56,13 @@ public:
 
     void draw();
 
+    bool is_wall(int x_index, int y_index);
+
     bool is_colliding(SDL_Rect &rect);
 
-    bool is_wall(int x_index, int y_index);
+    bool is_on_floor(SDL_Rect &rect);
+
+    bool is_below_ceil(SDL_Rect &rect);
 
     void handle_collision(SDL_Rect &rect, int old_x, int old_y);
 };

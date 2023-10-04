@@ -1,51 +1,62 @@
 #include "Player_Object.h"
+#include <iostream>
 
 Player_Object::Player_Object(int x, int y, int w, int h, SDL_Renderer *Renderer)
-        : Renderer(Renderer) {
-    rect = {x, y, w, h};
-}
+        : Renderer(Renderer), rect({x, y, w, h}) {}
 
 void Player_Object::handle_input(SDL_Event event) {
-    old_x = rect.x;
-    old_y = rect.y;
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-            move_right = true;
+            direction_to_move = direction_to_move | RIGHT;
         }
         if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-            move_left = true;
+            direction_to_move = direction_to_move | LEFT;
         }
         if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-            jump = true;
-        }
-    } else if (event.type == SDL_KEYUP) {
-        if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-            move_right = false;
-        }
-        if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-            move_left = false;
-        }
-        if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-            jump = false;
+            direction_to_move = direction_to_move | JUMP;
         }
     }
-
+    if (event.type == SDL_KEYUP) {
+        if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+            direction_to_move = direction_to_move & ~RIGHT;
+        }
+        if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+            direction_to_move = direction_to_move & ~LEFT;
+        }
+        if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
+            direction_to_move = direction_to_move & ~JUMP;
+        }
+    }
 }
 
 void Player_Object::update(Map_Object *map) {
+
     y_vel += grav_acc;
-    if (y_vel > map->cell_height){
+    if (y_vel > map->cell_height) {
         y_vel = map->cell_height - 1;
     }
-
-    if (move_right){
-        rect.x += speed;
+    if (map->is_on_floor(rect)) {
+        y_vel = 0;
+        is_jumping = false;
     }
-    if (move_left){
+    if (map->is_below_ceil(rect) && y_vel < 0) {
+        y_vel = 0;
+    }
+
+    old_x = rect.x;
+    old_y = rect.y;
+
+    if (direction_to_move & LEFT) {
         rect.x -= speed;
     }
-    if (jump){
-        y_vel = -jump_acc;
+    if (direction_to_move & RIGHT) {
+        rect.x += speed;
+    }
+    if (direction_to_move & JUMP) {
+        if (!is_jumping) {
+            y_vel = -jump_acc;
+            is_jumping = true;
+        }
     }
 
     rect.y += y_vel;
