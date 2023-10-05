@@ -6,40 +6,34 @@ Player_Object::Player_Object(int x, int y, int w, int h, SDL_Renderer *Renderer)
 }
 
 void Player_Object::handle_input(SDL_Event event) {
-    switch(State){
-        case ALIVE:
-            old_x = rect.x;
-            old_y = rect.y;
-            if (event.type == SDL_KEYDOWN) {
-                if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                    move_right = true;
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-                    move_left = true;
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-                    move_up = true;
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-                    move_down = true;
-                }
-            } else if (event.type == SDL_KEYUP) {
-                if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                    move_right = false;
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-                    move_left = false;
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-                    move_up = false;
-                }
-                if (event.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-                    move_down = false;
-                }
-            }
-            break;
-        case DEAD:
-            break;
+    old_x = rect.x;
+    old_y = rect.y;
+    if (event.type == SDL_KEYDOWN) {
+        if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+            move_right = true;
+        }
+        if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+            move_left = true;
+        }
+        if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
+            move_up = true;
+        }
+        if (event.key.keysym.scancode == SDL_SCANCODE_DOWN) {
+            move_down = true;
+        }
+    } else if (event.type == SDL_KEYUP) {
+        if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+            move_right = false;
+        }
+        if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
+            move_left = false;
+        }
+        if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
+            move_up = false;
+        }
+        if (event.key.keysym.scancode == SDL_SCANCODE_DOWN) {
+            move_down = false;
+        }
     }
 }
 
