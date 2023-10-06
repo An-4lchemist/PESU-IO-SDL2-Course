@@ -12,7 +12,7 @@ void Pellets_Object::draw() {
 
 void Pellets_Object::update(SDL_Rect rect, int &score) {
     for (auto &pellet: pellets) {
-        if (SDL_HasIntersection(&rect, &pellet) && pellet.x != -50) {
+        if (SDL_HasIntersection(&rect, &pellet)) {
             score += 10;
             pellet.x = -50;
             pellet.y = -50;
