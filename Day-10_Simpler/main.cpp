@@ -58,7 +58,6 @@ int main(int argc, char **argv) {
             pellets->update(player->rect, score);
 
             if (pellets->is_empty()) {
-                pellets->pellets.clear();
                 pellets->pellets = map->get_pellets();
             }
         }
