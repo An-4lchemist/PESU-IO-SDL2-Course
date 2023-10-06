@@ -7,24 +7,24 @@ Player_Object::Player_Object(int x, int y, int w, int h, SDL_Renderer *Renderer)
 void Player_Object::handle_input(SDL_Event event) {
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-            direction_to_move = direction_to_move | RIGHT;
+            move_right = true;
         }
         if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-            direction_to_move = direction_to_move | LEFT;
+            move_left = true;
         }
         if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-            direction_to_move = direction_to_move | JUMP;
+            jump = true;
         }
     }
     if (event.type == SDL_KEYUP) {
         if (event.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-            direction_to_move = direction_to_move & ~RIGHT;
+            move_right = false;
         }
         if (event.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-            direction_to_move = direction_to_move & ~LEFT;
+            move_left = false;
         }
         if (event.key.keysym.scancode == SDL_SCANCODE_UP) {
-            direction_to_move = direction_to_move & ~JUMP;
+            jump = false;
         }
     }
 }
@@ -46,13 +46,13 @@ void Player_Object::update(Map_Object *map) {
     old_x = rect.x;
     old_y = rect.y;
 
-    if (direction_to_move & LEFT) {
+    if (move_left) {
         rect.x -= speed;
     }
-    if (direction_to_move & RIGHT) {
+    if (move_right) {
         rect.x += speed;
     }
-    if (direction_to_move & JUMP) {
+    if (jump) {
         if (!is_jumping) {
             y_vel = -jump_acc;
             is_jumping = true;
