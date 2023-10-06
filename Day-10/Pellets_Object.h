@@ -8,7 +8,7 @@
 class Pellets_Object {
 public:
     std::vector<SDL_Rect> pellets;
-    int count;
+    int count{};
 
     SDL_Renderer *Renderer;
 
